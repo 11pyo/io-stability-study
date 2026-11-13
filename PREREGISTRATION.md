@@ -154,4 +154,7 @@ Analyses invented after seeing results are labelled "exploratory" in the paper.
 
 ## Amendments
 
-(none)
+**Amendment 1 (2026-11-13, before any result was seen).** The first run stopped while loading prices: the
+producer price series mapped to sector 79 (문화 및 여행 관련 서비스) has no values for 2015-2017. Sector 79 is
+now mapped, for all years, to the next higher index 예술, 스포츠 및 여가 관련 서비스 (substitutes: 15 of 83
+sectors instead of 14). The run had not written or printed any statistic; no result informed this change.
