@@ -5,7 +5,9 @@ year's sectoral output, reading the table down its columns (Leontief, demand-dri
 (Ghosh, supply-driven), on the Bank of Korea's annual tables (83 and 165 sectors, eight within-basis
 transitions).
 
-**Main findings** (details in [paper/manuscript.md](paper/manuscript.md), numbers in [paper/tables.md](paper/tables.md))
+**Paper (PDF): [paper/paper.pdf](paper/paper.pdf)**
+
+**Main findings** (text in [paper/manuscript.md](paper/manuscript.md), numbers in [paper/tables.md](paper/tables.md))
 
 - Knowing next year's final demand or primary inputs, both models miss sectoral output by about 2.5%
   (pooled WAPE 2.72% Leontief, 2.47% Ghosh) and clearly beat uniform scaling (5.48%).
