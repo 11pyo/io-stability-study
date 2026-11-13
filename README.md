@@ -1,6 +1,6 @@
 # Demand-driven or supply-driven? Leontief vs Ghosh hindcasts on Korean input-output tables, 2015-2024
 
-A small pre-registered study. It asks how well one year's inter-industry structure reproduces the next
+Wonpyo Han (Independent Researcher). A small pre-registered study. It asks how well one year's inter-industry structure reproduces the next
 year's sectoral output, reading the table down its columns (Leontief, demand-driven) or along its rows
 (Ghosh, supply-driven), on the Bank of Korea's annual tables (83 and 165 sectors, eight within-basis
 transitions).
@@ -45,6 +45,6 @@ here; `code/ecos_fetch_io.py` records each file's SHA-256 and the analysis refus
 ## License
 
 Code: Apache-2.0 (`LICENSE`). Text of the paper and the tables: CC BY 4.0. Please cite as
-"11pyo (2026), Demand-driven or supply-driven? A pre-registered hindcast comparison of the Leontief and
+"Han, W. (2026), Demand-driven or supply-driven? A pre-registered hindcast comparison of the Leontief and
 Ghosh models on Korean input-output tables, 2015-2024, working paper,
 https://github.com/11pyo/io-stability-study".

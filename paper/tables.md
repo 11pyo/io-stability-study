@@ -59,7 +59,7 @@
 | R5: constant prices of the selling product | -0.030 [-0.161, +0.104] | +0.157 [-0.081, +0.391] | +0.108 [-0.155, +0.368] | does not hold |
 | R6: without 2023-24 | -0.062 [-0.208, +0.087] | +0.120 [-0.105, +0.343] | - | - |
 
-_R1 reports H2 and H2b beyond the pre-registration, which specified H1 only for that check._
+*R1 reports H2 and H2b beyond the pre-registration, which specified H1 only for that check.*
 
 
 ### Table 4b. H3 (coefficient stability in the shock transitions) in the robustness variants

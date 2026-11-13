@@ -1,6 +1,10 @@
 # Demand-driven or supply-driven? A pre-registered hindcast comparison of the Leontief and Ghosh models on Korean input-output tables, 2015-2024
 
-*Working paper, November 2026. Author: 11pyo. Data, code and pre-registration: https://github.com/11pyo/io-stability-study. All numbers come from `results/results.json` through `code/make_tables.py`; tables are in `paper/tables.md`.*
+*Wonpyo Han, Independent Researcher, Republic of Korea. Working paper, November 2026. Data, code and pre-registration: https://github.com/11pyo/io-stability-study. All numbers come from `results/results.json` through `code/make_tables.py`; tables are in `paper/tables.md`.*
+
+**Keywords:** input-output analysis; Leontief model; Ghosh model; coefficient stability; hindcast; pre-registration; Korea
+
+**JEL codes:** C67, C53, E23
 
 ## Abstract
 
@@ -55,7 +59,7 @@ falls across the rebasing and cannot be studied this way: tables from different 
 classification and compilation, so a cross-basis transition would mix structural change with rebasing.
 
 From each table we read only the domestic intermediate block Z and total output x. Final demand
-f = x - Z1 and primary inputs w = x - Z'1 are derived, so both accounting identities hold exactly; w
+$f = x - Z\iota$ and primary inputs $w = x - Z'\iota$ ($\iota$ a vector of ones) are derived, so both accounting identities hold exactly; w
 therefore includes imported intermediates. The published final-demand total agrees with the derived one to
 within 1e-6 in every table. At 83 sectors no sector has non-positive output; at 165 sectors one sector in
 the 2020 basis has, and is removed. A few sectors have negative derived final demand (one or two at 83
@@ -70,14 +74,21 @@ SHA-256 hashes recorded; the analysis script refuses a file whose hash is not in
 
 ### 3.1 Models and baselines
 
-For a transition from t to t+1, with A_t = Z_t diag(x_t)^-1 and B_t = diag(x_t)^-1 Z_t:
+For a transition from $t$ to $t+1$, with input coefficients $A_t = Z_t \hat{x}_t^{-1}$ and allocation
+coefficients $B_t = \hat{x}_t^{-1} Z_t$, next-year output is reproduced as
 
-- Leontief hindcast: xhat = (I - A_t)^-1 f_{t+1}
-- Ghosh hindcast: xhat' = w_{t+1}' (I - B_t)^-1
-- Baselines: no change (N); uniform scaling by aggregate output growth (U); direct demand effect only,
-  xhat = x_t + f_{t+1} - f_t (DL); direct supply effect only, xhat = x_t + w_{t+1} - w_t (DG).
+```latex
+\begin{aligned}
+\text{Leontief:}\quad & \tilde{x}_{t+1} = (I - A_t)^{-1} f_{t+1} \\
+\text{Ghosh:}\quad & \tilde{x}_{t+1}' = w_{t+1}' (I - B_t)^{-1} \\
+\text{Direct demand only (DL):}\quad & \tilde{x}_{t+1} = x_t + f_{t+1} - f_t \\
+\text{Direct supply only (DG):}\quad & \tilde{x}_{t+1} = x_t + w_{t+1} - w_t
+\end{aligned}
+```
 
-Because x_{t+1} = (I - A_{t+1})^-1 f_{t+1} is an identity, the model errors here are caused only by
+Two further baselines are no change (N) and uniform scaling by aggregate output growth (U).
+
+Because the identity $x_{t+1} = (I - A_{t+1})^{-1} f_{t+1}$ holds exactly, the model errors here are caused only by
 coefficient change. This is a conditional hindcast: it says how much is lost by using last year's structure,
 not how well output can be forecast.
 
@@ -91,9 +102,15 @@ Ghosh. As a reference we also adjust last year's flow matrix to next year's row 
 
 ### 3.2 Measures and decision rules
 
-The primary measure is the weighted absolute percentage error, WAPE = sum|xhat - x| / sum x, pooled as a
-ratio of sums. Relative accuracy is r = ln(WAPE_Ghosh / WAPE_Leontief), positive when Leontief is more
-accurate. Intervals are 90% percentile intervals from 10,000 bootstrap resamples of sectors, drawn within
+The primary measure is the weighted absolute percentage error, pooled as a ratio of sums over all
+sectors $i$ and transitions in a set, and relative accuracy is its log ratio, positive when Leontief is more
+accurate:
+
+```latex
+\mathrm{WAPE} = \frac{\sum |\tilde{x}_{i,t+1} - x_{i,t+1}|}{\sum x_{i,t+1}}, \qquad
+r = \ln \frac{\mathrm{WAPE}_{\text{Ghosh}}}{\mathrm{WAPE}_{\text{Leontief}}}
+```
+ Intervals are 90% percentile intervals from 10,000 bootstrap resamples of sectors, drawn within
 each basis and keeping a sector's errors in all transitions together; models are solved once and not
 re-solved on resamples. The intervals describe sampling of sectors, not of years, and no multiplicity
 correction is applied.
@@ -115,7 +132,7 @@ growth-rate error instead of WAPE; each basis separately; constant prices; and d
 ### 3.3 Why constant prices matter for this comparison
 
 If each product sells at one price to all buyers, that price cancels in the allocation coefficient
-B_ij = p_i z_ij / (p_i q_i) but not in the input coefficient A_ij = (p_i / p_j) a_ij. In current prices the
+$B_{ij} = p_i z_{ij} / (p_i q_i)$ but not in the input coefficient $A_{ij} = (p_i / p_j)\, a_{ij}$. In current prices the
 Ghosh calculation is algebraically a cost-push price calculation (Dietzenbacher 1997), so it is helped by
 relative price changes that hurt the Leontief calculation. A current-price result in favour of Ghosh during
 a price shock would therefore not show that quantities are supply-driven. We address this by dividing each
@@ -148,6 +165,17 @@ sectors it converges in every transition (23-55 iterations), so the RAS referenc
 165 sectors it fails to converge for 2023-24, where one row's positive and negative flows nearly cancel;
 the 165-sector RAS figures in the results file are therefore invalid and are not reported. No hypothesis
 statistic uses RAS.
+
+### 3.6 Use of generative AI
+
+This study was carried out with substantial assistance from generative AI: Anthropic's Claude models
+(Claude Fable 5.2 and Claude Opus 5.5, used through Claude Code, November 2026). The AI systems were used to
+write the data-download and analysis code, run the pre-registered analysis, draft the pre-registration and
+this text, and, as separately run agents, to review the design before data were seen and to re-implement
+the main calculations independently. The research question, the decision to publish the result whatever its
+direction, and responsibility for the content rest with the author, who reviewed the code, the results and
+the text. Every number in the paper is generated by code from public data, and the code and its commit
+history are public.
 
 ## 4. Results
 
@@ -253,6 +281,11 @@ of the driver, neither model reliably improves on assuming that nothing changes.
 For users of input-output models the practical reading is modest: a fixed structure is a good accounting
 device for propagating a known change, a poor forecaster, and the choice between the two readings of the
 table matters less for accuracy than the stability of the period one applies it to.
+
+## Declarations
+
+Funding: none. Competing interests: none. Data availability: all source tables are public (Bank of Korea);
+code, pre-registration and results are openly available (see Reproducibility).
 
 ## Reproducibility
 
