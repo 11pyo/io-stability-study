@@ -1,6 +1,6 @@
 # Demand-driven or supply-driven? A pre-registered hindcast comparison of the Leontief and Ghosh models on Korean input-output tables, 2015-2024
 
-*Draft of 2026-11-13. All numbers come from `results/results.json` through `code/make_tables.py`; tables are in `paper/tables.md`.*
+*Working paper, November 2026. Author: 11pyo. Data, code and pre-registration: https://github.com/11pyo/io-stability-study. All numbers come from `results/results.json` through `code/make_tables.py`; tables are in `paper/tables.md`.*
 
 ## Abstract
 
@@ -10,16 +10,16 @@ model, which holds allocation coefficients fixed. We compare how well each repro
 output on the Bank of Korea's annual tables for 2015-2024 (83 and 165 sectors, eight within-basis
 transitions), following the design of Bon (1986) and Dietzenbacher and Hoen (2006). Hypotheses, statistics
 and decision rules were fixed and committed before any result was computed. With perfect foresight of the
-exogenous vector, both models miss next-year output by about 2.5% (pooled weighted absolute percentage
+exogenous vector, both models miss next-year output by about 2.5-2.7% (pooled weighted absolute percentage
 error 2.72% for Leontief and 2.47% for Ghosh) and both clearly beat uniform scaling (5.48%) and their
 direct-effect-only counterparts. The two models are not distinguishable at 83 sectors (log error ratio
--0.095, 90% interval -0.234 to +0.050). Our directional prediction, that the supply-driven model would gain
+-0.095, 90% interval -0.234 to +0.050); this result is fragile, since Ghosh is more accurate at 165 sectors and within the 2020 basis. Our directional prediction, that the supply-driven model would gain
 ground in the 2020-22 recovery and price-shock transitions, is not supported. Coefficient stability did
-deteriorate in those transitions for both models, by roughly 35-45%. Without foresight, both models improve
+deteriorate in those transitions for both models, by roughly 35-45%, although 2022-23 was equally unstable and the contrast is confounded with the change of benchmark basis. Without foresight, both models improve
 on trend extrapolation only marginally and lose to a no-change forecast in three of six transitions. An
-unplanned observation is that the relative accuracy of the two models drifts steadily over the decade, from
-Leontief ahead in 2015-17 to Ghosh ahead in 2022-24, and that this drift survives deflation; we report it
-as exploratory.
+unplanned observation is that the relative accuracy of the two models drifts over the decade, almost monotonically in the main specification, from
+Leontief ahead in 2015-17 to Ghosh ahead in 2022-24; a similar but less regular pattern appears in constant
+prices. We report it as exploratory.
 
 ## 1. Introduction
 
@@ -29,11 +29,13 @@ these fixed gives the Leontief model, in which final demand drives output. Readi
 allocation coefficients: what share of a sector's output goes to each buyer. Holding these fixed gives the
 Ghosh (1958) model, in which primary inputs drive output. The second reading has been criticised as
 implausible as a quantity model (Oosterhaven 1988), reinterpreted as a price model (Dietzenbacher 1997) and
-criticised again (de Mesnard 2009), but it remains in use, especially for supply disruptions.
+criticised again (de Mesnard 2009), and ways to make it more plausible have been proposed (Guerra and Sancho
+2011). It remains in use, especially for supply disruptions, alongside dynamic production-network models
+that relax fixed coefficients altogether (Pichler et al. 2022).
 
 Whatever its interpretation, each model implies a concrete calculation that can be checked against the
-next year's table. Bon (1986) and Dietzenbacher and Hoen (2006) did this for the United States and for the
-Netherlands (1948-84). We repeat the exercise for Korea, 2015-2024, for three reasons. The period contains
+next year's table. Bon (1986) proposed comparing the two models' stability in this way, and Dietzenbacher
+and Hoen (2006) applied the comparison to Dutch tables for 1948-84. We repeat the exercise for Korea, 2015-2024, for three reasons. The period contains
 a recovery from a pandemic and a large energy price shock, the kind of episode for which supply-side
 reasoning is usually invoked. Annual tables at two levels of detail are public. And the comparison can be
 pre-registered: there are enough arbitrary choices in such an exercise (error measure, pooling, which
@@ -49,8 +51,8 @@ We use the Bank of Korea's input-output tables at producer prices, domestic tran
 prices. Tables for 2015-2019 follow the 2015 benchmark; tables for 2020-2024 follow the 2020 benchmark. The
 benchmark years are survey-based; the other years are extension tables. We form transitions only within a
 basis, which gives eight: 2015-16 to 2018-19 and 2020-21 to 2023-24. The pandemic year itself, 2019-20,
-falls across the rebasing and cannot be studied this way; in earlier work we found that final-demand
-aggregates differ by 6-10% between the two bases for reasons unrelated to the economy.
+falls across the rebasing and cannot be studied this way: tables from different benchmark bases differ in
+classification and compilation, so a cross-basis transition would mix structural change with rebasing.
 
 From each table we read only the domestic intermediate block Z and total output x. Final demand
 f = x - Z1 and primary inputs w = x - Z'1 are derived, so both accounting identities hold exactly; w
@@ -58,7 +60,8 @@ therefore includes imported intermediates. The published final-demand total agre
 within 1e-6 in every table. At 83 sectors no sector has non-positive output; at 165 sectors one sector in
 the 2020 basis has, and is removed. A few sectors have negative derived final demand (one or two at 83
 sectors, three to seven at 165), which reflects inventory change; none has negative primary inputs in
-current prices.
+current prices. In constant prices one or two sectors have negative primary inputs in most years (Data
+notes in the tables file); they are kept.
 
 The 20 workbooks were downloaded on 13 November 2026 from the Bank of Korea's statistics system and their
 SHA-256 hashes recorded; the analysis script refuses a file whose hash is not in the record.
@@ -122,7 +125,8 @@ and repeating the tests. Under this deflation B is unchanged and A becomes the p
 
 ### 3.4 Pre-registration and deviations
 
-The design was reviewed by an independent reader before any number was computed; the review changed the
+The design was reviewed before any number was computed by a reviewer who saw no data (an AI agent run
+separately from the analysis); the review changed the
 relative-accuracy statistic from a difference to a log ratio, added the second period contrast, the rank
 condition, the constant-price check and the RAS reference, and tightened the bootstrap description. The
 document was then committed (da90baf), followed by the analysis code (c99b243). One amendment was made
@@ -132,10 +136,11 @@ conceived after seeing the results and is labelled exploratory.
 
 ### 3.5 Independent verification and one known defect
 
-A second analyst, working from the raw workbooks with separately written code and without the study's
-modules, reproduced every per-transition and pooled error in Tables 1, 2 and 6, the pooled r at 83 and 165
-sectors, and the energy-excluded r, to within 5e-15. The bootstrap intervals, the constant-price variant
-and the secondary measures were reviewed in code but not recomputed.
+A separate re-implementation, written from the raw workbooks without the study's modules (by another AI
+agent; scripts in `code/independent_check/`), reproduced every per-transition and pooled error in Tables 1,
+2 and 6, the pooled r at 83 and 165 sectors, and the energy-excluded r, to within 5e-15. The bootstrap
+intervals, the constant-price variant, the secondary measures and robustness checks R3, R4 and R6 were
+reviewed in code but not recomputed.
 
 The verification found one defect. The flow tables contain negative cells (88-125 at 83 sectors, 460-526
 at 165), and the RAS routine stops after 1,000 iterations without reporting whether it converged. At 83
@@ -146,7 +151,7 @@ statistic uses RAS.
 
 ## 4. Results
 
-### 4.1 Both structures work, to within about 2.5%
+### 4.1 Both structures work, to within about 2.5-2.7%
 
 With perfect foresight, last year's structure reproduces next year's sectoral output with a pooled WAPE of
 2.72% (Leontief) and 2.47% (Ghosh) (Table 1). Uniform scaling misses by 5.48% and no change by 7.36%, so
@@ -168,10 +173,10 @@ more accurate. With energy sectors excluded from scoring the difference disappea
 prices it shrinks to -0.030 with an interval centred near zero. By basis, Leontief is ahead in the 2015
 basis (+0.110, interval includes zero) and Ghosh in the 2020 basis (-0.206, interval -0.379 to -0.025).
 
-Under the pre-registered rule the primary result stands and is labelled fragile: one robustness check
-(165 sectors) reaches a different decision. A fair summary is that the Ghosh calculation is at least as
-accurate as the Leontief calculation on these tables, and that part of its small advantage in current
-prices comes from energy sectors and from relative prices.
+Under the pre-registered rule the primary result stands and is labelled fragile: two robustness checks
+(165 sectors; the 2020 basis alone) reach a different decision. The models are not distinguishable at 83
+sectors; the Ghosh point estimate moves toward zero when energy sectors are excluded or prices are held
+constant, but those intervals overlap with the main one, so we do not attribute the difference to either.
 
 ### 4.3 H2: no shift towards the supply-driven model in the shock transitions
 
@@ -179,14 +184,15 @@ The prediction was that Ghosh would do relatively better in 2020-21 and 2021-22 
 has the predicted sign but is small and its interval includes zero (d2 = +0.061, -0.142 to +0.264); the
 second contrast is smaller still (+0.025); and the rank condition fails, because the two lowest values of r
 are 2023-24 and 2022-23, not the shock transitions (Table 3). None of the three components holds, in any
-variant (Table 4). H2 is not supported.
+variant (Table 4; the 165-sector H2 values go beyond the pre-registration). H2 is not supported.
 
 ### 4.4 H3: coefficients were less stable in the shock transitions
 
-Intermediate flows predicted from last year's coefficients miss by about 7% in the 2015-basis transitions
-and by 12% in 2020-21 and 2021-22 (Table 2). The log ratios are +0.371 for input coefficients and +0.309 for
+Intermediate flows predicted from last year's coefficients miss by 6-8% in the 2015-basis transitions
+and by 11-12% in 2020-21 and 2021-22 (Table 2). The log ratios are +0.371 for input coefficients and +0.309 for
 allocation coefficients, with intervals above zero, and the second contrast agrees (+0.336 and +0.283). H3
-is supported for both models, in current and in constant prices and with energy sectors excluded.
+is supported for both models, in current and in constant prices and with energy sectors excluded
+(Table 4b).
 
 Two qualifications. First, 2022-23 is as unstable as the two shock transitions (12.3% and 11.0%), and the
 whole 2020 basis is less stable than the 2015 basis, so the contrast may measure a difference between bases
@@ -197,7 +203,7 @@ compilation rule (RAS error below a quarter of the model error) is not triggered
 
 ### 4.5 H5: without foresight the models add little
 
-When the exogenous vector must itself be extrapolated, errors rise to 4.5-11% (Table 6). Both models are
+When the exogenous vector must itself be extrapolated, errors rise to 4.2-11.1% (Table 6). Both models are
 better than trend extrapolation of output by the pre-registered rule (log ratios +0.048 and +0.074,
 intervals just above zero), but the gain is a few tenths of a percentage point, and by construction it only
 shows that last year's coefficient change does not carry over. More telling is the comparison we did not
@@ -208,8 +214,8 @@ structure that is accurate when the driver is known does not help when the drive
 
 Ordered by time, r falls almost monotonically: +0.214, +0.214, +0.068, -0.052 in the 2015 basis and
 -0.130, -0.142, -0.261, -0.301 in the 2020 basis (Table 1). Leontief is ahead early and Ghosh late, and the
-largest Ghosh advantage comes in 2022-24, after the shock. The pattern is present at 165 sectors and in
-constant prices, and weaker but visible with energy sectors excluded (Table 5).
+largest Ghosh advantage comes in 2022-24, after the shock. A similar pattern appears at 165 sectors and,
+less regularly, in constant prices; it is weaker with energy sectors excluded (Table 5).
 
 We did not predict this and have not tested it. Three readings are possible. It may be a property of how
 extension tables were compiled under each benchmark; the two bases differ in classification detail and
@@ -228,7 +234,7 @@ extension method.
 - Current prices mix price and quantity change. The constant-price variant uses one price index per selling
   sector, 15 of 83 through a parent index, and does not deflate imports separately.
 - Eight transitions in one country. The intervals reflect which sectors happen to be in the tables, not
-  which years happened to be observed, and nine or more intervals are reported without correction.
+  which years happened to be observed, and about 30 intervals are reported without correction.
 - The period contrast is confounded with the benchmark basis: both shock transitions are in the 2020 basis.
 - Nothing here bears on the economic interpretation of the Ghosh model. A more accurate hindcast does not
   make supply-driven quantities plausible; in current prices it may only reflect that nominal allocation
@@ -237,9 +243,10 @@ extension method.
 ## 7. Conclusion
 
 On Korean tables for 2015-2024, last year's inter-industry structure reproduces next year's sectoral output
-to within about 2.5% when the driver is known, whichever way the table is read. The supply-driven
-calculation is at least as accurate as the demand-driven one, not distinguishably so at 83 sectors and
-slightly so at 165. Coefficients of both kinds became markedly less stable from 2020. The supply-driven
+to within about 2.5-2.7% when the driver is known, whichever way the table is read. The two readings are
+not distinguishable at 83 sectors; the supply-driven one is slightly more accurate at 165 sectors and within
+the 2020 basis, so that result is fragile. Coefficients of both kinds were markedly less stable in the 2020-basis transitions, including but not only
+the shock years. The supply-driven
 model did not gain in the shock transitions specifically, contrary to our prediction. And without knowledge
 of the driver, neither model reliably improves on assuming that nothing changes.
 
@@ -249,7 +256,7 @@ table matters less for accuracy than the stability of the period one applies it 
 
 ## Reproducibility
 
-Pre-registration, code, concordance and results are in the study repository. The commit sequence is:
+Pre-registration, code, concordance and results are at https://github.com/11pyo/io-stability-study. The commit sequence is:
 da90baf (pre-registration and model definitions), c99b243 (analysis code and synthetic tests), a8c31d3
 (amendment 1), c749470 (results). `python -B code/analysis.py <panel dir> <ppi csv> results` reproduces
 `results/results.json` (SHA-256 d8681d19...); `code/make_tables.py` rebuilds the tables. The source
@@ -257,15 +264,14 @@ workbooks are public and are identified by hash in the provenance record.
 
 ## References
 
-Bibliographic details below were written from memory except Dietzenbacher and Hoen (2006) and must be
-checked against the publications before submission.
+Bibliographic details were checked against publisher or RePEc records on 13 November 2026.
 
-- Bon, R. (1986). Comparative stability analysis of demand-side and supply-side input-output models. *International Journal of Forecasting*, 2(2), 231-235.
+- Bon, R. (1986). Comparative stability analysis of demand-side and supply-side input-output models. *International Journal of Forecasting*, 2(2), 231-235. https://doi.org/10.1016/0169-2070(86)90112-3
 - de Mesnard, L. (2009). Is the Ghosh model interesting? *Journal of Regional Science*, 49(2), 361-372.
-- Dietzenbacher, E. (1997). In vindication of the Ghosh model: a reinterpretation as a price model. *Journal of Regional Science*, 37(4), 629-651.
-- Dietzenbacher, E., and Hoen, A. R. (2006). Coefficient stability and predictability in input-output models: a comparative analysis for the Netherlands. *Construction Management and Economics*, 24(7), 671-680.
+- Dietzenbacher, E. (1997). In vindication of the Ghosh model: a reinterpretation as a price model. *Journal of Regional Science*, 37(4), 629-651. https://doi.org/10.1111/0022-4146.00073
+- Dietzenbacher, E., and Hoen, A. R. (2006). Coefficient stability and predictability in input-output models: a comparative analysis for the Netherlands. *Construction Management and Economics*, 24(7), 671-680. https://doi.org/10.1080/01446190600567985
 - Ghosh, A. (1958). Input-output approach in an allocation system. *Economica*, 25(97), 58-64.
-- Guerra, A.-I., and Sancho, F. (2011). A comparison of input-output models: Ghosh reduces to Leontief (but 'closing' Ghosh makes it more plausible). *Economic Systems Research*, 23(3), 319-328.
+- Guerra, A.-I., and Sancho, F. (2011). Revisiting the original Ghosh model: can it be made more plausible? *Economic Systems Research*, 23(3), 319-328.
 - Miller, R. E., and Blair, P. D. (2009). *Input-Output Analysis: Foundations and Extensions* (2nd ed.). Cambridge University Press.
-- Oosterhaven, J. (1988). On the plausibility of the supply-driven input-output model. *Journal of Regional Science*, 28(2), 203-217.
-- Pichler, A., Pangallo, M., del Rio-Chanona, R. M., Lafond, F., and Farmer, J. D. (2022). Forecasting the propagation of pandemic shocks with a dynamic input-output model. *Journal of Economic Dynamics and Control*, 144, 104527.
+- Oosterhaven, J. (1988). On the plausibility of the supply-driven input-output model. *Journal of Regional Science*, 28(2), 203-217. https://doi.org/10.1111/j.1467-9787.1988.tb01208.x
+- Pichler, A., Pangallo, M., del Rio-Chanona, R. M., Lafond, F., and Farmer, J. D. (2022). Forecasting the propagation of pandemic shocks with a dynamic input-output model. *Journal of Economic Dynamics and Control*, 144, 104527. https://doi.org/10.1016/j.jedc.2022.104527

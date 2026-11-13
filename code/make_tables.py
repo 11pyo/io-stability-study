@@ -95,6 +95,15 @@ def main(argv):
     line("R5: constant prices of the selling product", R["R5_constant_prices"])
     line("R6: without 2023-24", M, "R6_H1_r", "R6_H2_d2", None, False)
 
+    out.append("\n_R1 reports H2 and H2b beyond the pre-registration, which specified H1 only for that check._\n")
+    out.append("\n### Table 4b. H3 (coefficient stability in the shock transitions) in the robustness variants\n")
+    out.append("| Variant | Leontief: P vs O | Leontief: P* vs O* | Ghosh: P vs O | Ghosh: P* vs O* |")
+    out.append("|---|---|---|---|---|")
+    for label, key in (("Main: current prices", "main_83_current_prices"), ("R2: energy sectors excluded", "R2_energy_excluded"),
+                       ("R5: constant prices", "R5_constant_prices")):
+        a, b = R[key]["point"], R[key]["interval90"]
+        cells = [f"{a[k]:+.3f} {ci(b[k])}" for k in ("H3_leontief", "H3b_leontief", "H3_ghosh", "H3b_ghosh")]
+        out.append(f"| {label} | " + " | ".join(cells) + " |")
     out.append("\n### Table 5. r by transition in the robustness variants\n")
     out.append("| Transition | Main | R1: 165 sectors | R2: energy excluded | R5: constant prices |")
     out.append("|---|---|---|---|---|")

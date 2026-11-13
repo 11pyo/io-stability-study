@@ -59,6 +59,17 @@
 | R5: constant prices of the selling product | -0.030 [-0.161, +0.104] | +0.157 [-0.081, +0.391] | +0.108 [-0.155, +0.368] | does not hold |
 | R6: without 2023-24 | -0.062 [-0.208, +0.087] | +0.120 [-0.105, +0.343] | - | - |
 
+_R1 reports H2 and H2b beyond the pre-registration, which specified H1 only for that check._
+
+
+### Table 4b. H3 (coefficient stability in the shock transitions) in the robustness variants
+
+| Variant | Leontief: P vs O | Leontief: P* vs O* | Ghosh: P vs O | Ghosh: P* vs O* |
+|---|---|---|---|---|
+| Main: current prices | +0.371 [+0.259, +0.488] | +0.336 [+0.199, +0.471] | +0.309 [+0.200, +0.420] | +0.283 [+0.164, +0.400] |
+| R2: energy sectors excluded | +0.355 [+0.242, +0.476] | +0.288 [+0.156, +0.423] | +0.286 [+0.174, +0.403] | +0.246 [+0.134, +0.362] |
+| R5: constant prices | +0.352 [+0.229, +0.478] | +0.326 [+0.202, +0.451] | +0.315 [+0.202, +0.430] | +0.279 [+0.164, +0.394] |
+
 ### Table 5. r by transition in the robustness variants
 
 | Transition | Main | R1: 165 sectors | R2: energy excluded | R5: constant prices |
